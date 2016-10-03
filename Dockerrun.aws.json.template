@@ -11,7 +11,7 @@
   "containerDefinitions": [
     {
       "name": "<NAME>",
-      "image": "<NAME>:<TAG>",
+      "image": "arnoldcano/<NAME>:<TAG>",
       "essential": true,
       "memory": 128,
       "portMappings": [
