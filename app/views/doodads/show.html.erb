@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @doodad.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @doodad.description %>
+</p>
+
+<%= link_to 'Edit', edit_doodad_path(@doodad) %> |
+<%= link_to 'Back', doodads_path %>

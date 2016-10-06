@@ -1,0 +1,2 @@
+module DoodadsHelper
+end
