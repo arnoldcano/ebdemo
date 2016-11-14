@@ -13,7 +13,7 @@
         {
           "containerPort": 0,
           "hostPort": 0,
-          "servicePort": 10001,
+          "servicePort": 10000,
           "protocol": "tcp"
         }
       ]
@@ -41,6 +41,9 @@
       "maxConsecutiveFailures": 3,
       "ignoreHttp1xx": false
     }
+  ],
+  "dependencies": [
+    "/postgres"
   ],
   "labels": {
     "HAPROXY_DEPLOYMENT_GROUP": "ebdemo",
