@@ -1,0 +1,51 @@
+{
+  "id": "/ebdemo",
+  "cpus": 0.25,
+  "mem": 512,
+  "instances": 3,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "arnoldcano/ebdemo:<TAG>",
+      "network": "BRIDGE",
+      "forcePullImage": true,
+      "portMappings": [
+        {
+          "containerPort": 0,
+          "hostPort": 0,
+          "servicePort": 10001,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "env": {
+    "RDS_DB_NAME": "ebdemo_production",
+    "RAILS_ENV": "production",
+    "RDS_USERNAME": "<RDS_USERNAME>",
+    "SECRET_KEY_BASE": "<SECRET_KEY_BASE>",
+    "RDS_PORT": "5432",
+    "RDS_HOSTNAME": "postgres.marathon.l4lb.thisdcos.directory",
+    "RDS_PASSWORD": "<RDS_PASSPORT>",
+    "RAILS_LOG_TO_STDOUT": "true",
+    "RAILS_SERVE_STATIC_FILES": "true"
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/widgets",
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "labels": {
+    "HAPROXY_DEPLOYMENT_GROUP": "ebdemo",
+    "HAPROXY_DEPLOYMENT_ALT_PORT": "10001",
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "ga-learni-publicsl-14s9w7jmhyifo-203553813.us-east-1.elb.amazonaws.com"
+  }
+}

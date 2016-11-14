@@ -9,6 +9,8 @@
   </head>
 
   <body>
+    <h3>Hello from <%= require 'socket'; Socket.gethostname %></h3>
+
     <%= yield %>
   </body>
 </html>
