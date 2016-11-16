@@ -1,7 +1,7 @@
 {
   "id": "/ebdemo",
   "cpus": 0.25,
-  "mem": 512,
+  "mem": 1024,
   "instances": 3,
   "container": {
     "type": "DOCKER",
