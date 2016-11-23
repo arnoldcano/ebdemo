@@ -6,6 +6,7 @@ TAG=`git rev-parse --short HEAD`
 DCOS_CLI_URL='https://downloads.dcos.io/binaries/cli/linux/x86-64/dcos-1.8/dcos'
 
 check_environment() {
+  echo 'Checking environment...'
   if [ -z $DCOS_URL ]; then
     echo 'DCOS_URL is not set'
     exit 1
@@ -29,6 +30,7 @@ check_environment() {
 }
 
 setup_dcos_cli() {
+  echo 'Setup DCOS CLI...'
   if ! which dcos > /dev/null; then
     curl -fLsS --retry 20 -Y 100000 -y 60 $DCOS_CLI_URL -o dcos
     sudo mv dcos /usr/local/bin
@@ -39,6 +41,7 @@ setup_dcos_cli() {
 }
 
 prepare_deploy() {
+  echo 'Preparing deploy...'
   if [ ! -f $TEMPLATE ]; then
     echo "$TEMPLATE not found"
     exit 1
@@ -52,26 +55,25 @@ prepare_deploy() {
 }
 
 deploy_to_dcos() {
+  prepare_deploy
+  echo 'Deploying to DCOS...'
   if dcos marathon app list | grep -q $NAME; then
-    dcos marathon app update $NAME < $TAG.json
+    if ! dcos marathon app update $NAME < $TAG.json; then local FAILED=1; fi
   else
-    dcos marathon app add < $TAG.json
+    if ! dcos marathon app add < $TAG.json; then local FAILED=1; fi
+  fi
+  cleanup_deploy
+  if [ $FAILED -eq 1 ]; then
+    echo "$NAME deploy failed"
+    exit 1
   fi
 }
 
 cleanup_deploy() {
-  if [ -f "$TAG.json" ]; then
-    rm $TAG.json
-  fi
+  echo 'Cleanup deploy...'
+  if [ -f "$TAG.json" ]; then rm $TAG.json; fi
 }
 
-echo 'Checking environment...'
 check_environment
-echo 'Setup DCOS CLI...'
 setup_dcos_cli
-echo 'Preparing deploy...'
-prepare_deploy
-echo 'Deploying to DCOS...'
 deploy_to_dcos
-echo 'Cleanup deploy...'
-cleanup_deploy
