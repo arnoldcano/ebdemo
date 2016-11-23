@@ -38,6 +38,7 @@ setup_dcos_cli() {
   fi
   dcos config set core.dcos_url $DCOS_URL
   dcos config set core.dcos_acs_token $DCOS_ACS_TOKEN
+  dcos config show
 }
 
 prepare_deploy() {
@@ -58,9 +59,9 @@ deploy_to_dcos() {
   prepare_deploy
   echo 'Deploying to DCOS...'
   if dcos marathon app list | grep -q $NAME; then
-    if ! dcos marathon app update $NAME < $TAG.json; then local FAILED=1; fi
+    if ! dcos marathon app update $NAME < $TAG.json; then FAILED=1; fi
   else
-    if ! dcos marathon app add < $TAG.json; then local FAILED=1; fi
+    if ! dcos marathon app add < $TAG.json; then FAILED=1; fi
   fi
   cleanup_deploy
   if [ $FAILED -eq 1 ]; then
