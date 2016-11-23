@@ -2,7 +2,7 @@
   "id": "/ebdemo",
   "cpus": 0.25,
   "mem": 1024,
-  "instances": 3,
+  "instances": 2,
   "container": {
     "type": "DOCKER",
     "docker": {
@@ -11,9 +11,8 @@
       "forcePullImage": true,
       "portMappings": [
         {
-          "containerPort": 0,
+          "containerPort": 8080,
           "hostPort": 0,
-          "servicePort": 10000,
           "protocol": "tcp"
         }
       ]
@@ -46,9 +45,7 @@
     "/postgres"
   ],
   "labels": {
-    "HAPROXY_DEPLOYMENT_GROUP": "ebdemo",
-    "HAPROXY_DEPLOYMENT_ALT_PORT": "10001",
     "HAPROXY_GROUP": "external",
-    "HAPROXY_0_VHOST": "ga-learni-publicsl-14s9w7jmhyifo-203553813.us-east-1.elb.amazonaws.com"
+    "HAPROXY_0_VHOST": "ebdemo.generalassemb.ly"
   }
 }
