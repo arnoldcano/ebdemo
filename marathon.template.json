@@ -1,0 +1,51 @@
+{
+  "id": "/ebdemo",
+  "cpus": 0.25,
+  "mem": 1024,
+  "instances": 2,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "<IMAGE>",
+      "network": "BRIDGE",
+      "forcePullImage": true,
+      "portMappings": [
+        {
+          "containerPort": 0,
+          "hostPort": 0,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "env": {
+    "RDS_DB_NAME": "ebdemo_production",
+    "RAILS_ENV": "production",
+    "RDS_USERNAME": "<RDS_USERNAME>",
+    "SECRET_KEY_BASE": "<SECRET_KEY_BASE>",
+    "RDS_PORT": "5432",
+    "RDS_HOSTNAME": "postgres.marathon.l4lb.thisdcos.directory",
+    "RDS_PASSWORD": "<RDS_PASSWORD>",
+    "RAILS_LOG_TO_STDOUT": "true",
+    "RAILS_SERVE_STATIC_FILES": "true"
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/widgets",
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "dependencies": [
+    "/postgres"
+  ],
+  "labels": {
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "ebdemo.generalassemb.ly"
+  }
+}
