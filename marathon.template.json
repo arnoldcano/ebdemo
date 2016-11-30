@@ -19,11 +19,11 @@
     }
   },
   "env": {
-    "RDS_DB_NAME": "ebdemo_production",
     "RAILS_ENV": "production",
     "SECRET_KEY_BASE": "<SECRET_KEY_BASE>",
-    "RDS_PORT": "5432",
     "RDS_HOSTNAME": "postgres.marathon.l4lb.thisdcos.directory",
+    "RDS_PORT": "5432",
+    "RDS_DB_NAME": "ebdemo_production",
     "RDS_USERNAME": "<RDS_USERNAME>",
     "RDS_PASSWORD": "<RDS_PASSWORD>",
     "RAILS_LOG_TO_STDOUT": "true",
