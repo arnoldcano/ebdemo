@@ -3,6 +3,9 @@
   "cpus": 0.25,
   "mem": 1024,
   "instances": 2,
+  "constraints": [
+    ["hostname", "UNIQUE"]
+  ],
   "container": {
     "type": "DOCKER",
     "docker": {
